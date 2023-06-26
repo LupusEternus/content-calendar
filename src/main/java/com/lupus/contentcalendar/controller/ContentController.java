@@ -39,6 +39,7 @@ public class ContentController {
         repository.save(content);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
     public void update(@PathVariable Integer id,@RequestBody Content content){
         Optional<Content> inDbContent = repository.findById(id);
@@ -46,8 +47,16 @@ public class ContentController {
             throw  new ResponseStatusException(HttpStatus.NOT_FOUND,"Content not found");
         }
         repository.save(content);
+    }
 
-
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Integer id){
+        Optional<Content> to_delete = repository.findById(id);
+        if(to_delete.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Content not found");
+        }
+        repository.delete(id);
     }
 
 
