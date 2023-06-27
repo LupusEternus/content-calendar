@@ -3,6 +3,7 @@ package com.lupus.contentcalendar.controller;
 
 import com.lupus.contentcalendar.model.Content;
 import com.lupus.contentcalendar.repository.ContentCollectionRepository;
+import com.lupus.contentcalendar.repository.ContentRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,10 +17,11 @@ import java.util.Optional;
 @RequestMapping("/api/content")
 public class ContentController {
 
-    private final ContentCollectionRepository repository;
+    //private final ContentCollectionRepository repository;
+    private final ContentRepository repository;
 
-    @Autowired
-    public ContentController(ContentCollectionRepository repository) {
+
+    public ContentController(ContentRepository repository) {
         this.repository = repository;
     }
 
@@ -57,7 +59,7 @@ public class ContentController {
         if(to_delete.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Content not found");
         }
-        repository.delete(id);
+        repository.deleteById(id);
     }
 
 
