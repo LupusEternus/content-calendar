@@ -2,6 +2,7 @@ package com.lupus.contentcalendar.controller;
 
 
 import com.lupus.contentcalendar.model.Content;
+import com.lupus.contentcalendar.model.Status;
 import com.lupus.contentcalendar.repository.ContentCollectionRepository;
 import com.lupus.contentcalendar.repository.ContentRepository;
 import jakarta.validation.Valid;
@@ -62,6 +63,15 @@ public class ContentController {
         repository.deleteById(id);
     }
 
+    @GetMapping("/filter/{keyword}")
+    public List<Content> findByTitle(@PathVariable String keyword){
+        return repository.findAllByTitleContains(keyword);
+    }
+
+    @GetMapping("/filter/status/{status}")
+    public List<Content> listByStatus(@PathVariable String status){
+        return repository.listByStatus(Status.valueOf(status.toUpperCase()));
+    }
 
 }
 
